@@ -11,10 +11,9 @@ export default function Profile() {
 
     const [incidents, setIncidents] = useState([]);
 
+    const history = useHistory();
     const ongId = localStorage.getItem('ongId');
     const ongName = localStorage.getItem('ongName');
-    const history = useHistory();
-
     useEffect(() => {
         api.get('profile', {
             headers: {
@@ -33,7 +32,7 @@ export default function Profile() {
                 }
             });
 
-            setIncidents(incidents.filter(incident => incidents.id !== id));
+            setIncidents(incidents.filter(incident => incident.id != id));
         } 
         catch (err) {
             alert('Erro ao deletar caso, tente novamente');
@@ -53,7 +52,7 @@ export default function Profile() {
                 <span>Bem vinda, {ongName}</span>
 
                 <Link className="button" to="/incidents/new">Cadastrar novo caso</Link>
-                <button type="button">
+                <button onClick={handleLogout} type="button">
                     <FiPower size={18} color="E02041" />
                 </button>
             </header>

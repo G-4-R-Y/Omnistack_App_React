@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { FiLogIn } from 'react-icons/fi';
 
+import api from '../../services/api';
+
 import './styles.css';
 import '../../global.css';
 
 import logoImg from '../../assets/logo.svg';
 import heroesImg from '../../assets/heroes.png';
-import api from '../../services/api';
 
 export default function Logon() {
     const [id, setId] = useState('');
@@ -22,7 +23,7 @@ export default function Logon() {
             localStorage.setItem('ongId', id);
             localStorage.setItem('ongName', response.data.name);
 
-            history.pushState('/profile');
+            history.push('/profile');
         }
         catch (err) {
             alert('Falha no login, tente novamente.');
@@ -33,10 +34,15 @@ export default function Logon() {
         <div className="logon-container">
             <section className="form">
                 <img src={logoImg} alt="Be the Hero!" />
+                
                 <form onSubmit={handleLogin}>
                     <h1>Faca seu logon</h1>
 
-                    <input placeholder='Sua ID'/>
+                    <input 
+                        placeholder='Sua ID'
+                        value={id}
+                        onChange={e => setId(e.target.value)}    
+                    />
                     <button class="button" type="submit">Entrar</button>
 
                     <Link className="back-link" to="/register">
